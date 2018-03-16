@@ -3,29 +3,43 @@
 #include <fstream>
 #include "Racional.h"
 #include <vector>
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 void presentaMenuGeneral();
-
 int menu();
-
 void crearRacional();
+int escogerValor();
+void createFile(string);
+void add(string);
 
+//vector<Racional*> listRacionales;
 vector<Racional> listRacionales;
-
-
+string fichero = "Racionales.txt";
 
 int main() {
-
   char resp = 's';
   cout << "Primero crearemos dos racionales" << endl;
   crearRacional();
   crearRacional();
+  Racional racional1;
+  Racional racional2;
+  createFile("Log de Racionales Perrones:");
   do {
     int opcion = menu();
+    if ((opcion != 9) && (opcion != 10)){
+      cout << "Racional 1: " << endl;
+      racional1 = listRacionales[escogerValor()];
+      cout << "Racional 2: " << endl;
+      racional2 = listRacionales[escogerValor()];
+
+      cout << "Racional 1: " << racional1.getNumerador() << endl;
+      cout << "Racional 2: " << racional2.getNumerador() << endl;
+    }
     switch (opcion) {
     case 1:{
-        
 
         break;
       }
@@ -85,7 +99,7 @@ int main() {
       cout << "¿Desea continuar? [S/sí -- N/no]" << endl;
       cin >> resp;  
     }else{
-      resp = 's';
+      resp = 'n';
     }
     
   } while (resp == 's' || resp == 'S');
@@ -114,7 +128,7 @@ int menu(){
   return opcion;
 }
 
-void guardarArchivo(){
+/*void guardarArchivo(){
    string contenido;
   string contenido2= "Racionales";
   //cout << "Ingresa el nombre del archivo a crear(sin el .txt): ";
@@ -130,10 +144,10 @@ void guardarArchivo(){
   //system("pause");
 
 
-}
+}*/
 
 
-void modificarArchivo(){
+/*void modificarArchivo(){
    string contenido;
   string contenido2;
   cout << "Ingresa el nombre del archivo que quieres modificar(sin el .txt): ";
@@ -147,7 +161,7 @@ void modificarArchivo(){
   fs.close();
   cout << "El archivo ha sido modificado correctamente" << endl;
   system("pause");
-}
+}*/
 
 void crearRacional(){
   int numerador, denominador;
@@ -155,8 +169,35 @@ void crearRacional(){
   cin >> numerador;
   cout << "Ingrese el denominador" << endl;
   cin >> denominador;
-  Racional* racional = new Racional(numerador, denominador);
-
-  listRacionales.push_back(racional);
+  Racional racional = Racional();
+  //Racional* racional = new Racional(numerador, denominador);
+  //cout << "Esto es una prueba " << racional->getNumerador() << endl;
+  //cout << "Cantidad de racionales" << listRacionales.size();
+  //listRacionales.push_back(racional);
+  listRacionales.push_back(Racional(numerador, denominador));
+  //cout << "Cantidad de racionales" << listRacionales.size();
 }
 
+int escogerValor(){
+  int limite = listRacionales.size() - 1;
+  int valor = 0;
+  do{
+    cout << "Puede seleccionar un racional de 0 - " << limite << endl;
+    cout << "Ingrese un número: " << endl;
+    cin >> valor;
+  }while(valor < 0 || valor > limite);
+  return valor;
+}
+
+void createFile(string unString ){
+    ofstream fileOut ( fichero.c_str());
+    fileOut << unString << endl;
+    fileOut.close();
+}
+ 
+void add(string unString ){
+    fstream fileAdd;
+    fileAdd.open( fichero.c_str(), ios::app);
+    fileAdd << unString << endl;
+    fileAdd.close();
+}
