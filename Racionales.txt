@@ -1,1 +1,4 @@
-Racionales Perronesss
+Log de Racionales Perrones:
+Nuevo racional creado: 0/1
+Nuevo racional creado: 2/5
+Trató de dividir entre cero -> ¡Jamás!

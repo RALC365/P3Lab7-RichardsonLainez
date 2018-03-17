@@ -5,6 +5,12 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
+#include <stdio.h>
+
+
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -15,78 +21,174 @@ int escogerValor();
 void createFile(string);
 void add(string);
 
-//vector<Racional*> listRacionales;
 vector<Racional> listRacionales;
 string fichero = "Racionales.txt";
 
 int main() {
+  createFile("Log de Racionales Perrones:");
   char resp = 's';
   cout << "Primero crearemos dos racionales" << endl;
   crearRacional();
+  stringstream os1;
+        os1 << "Nuevo racional creado: " << listRacionales[listRacionales.size()-1].getNumerador() <<
+        "/" <<listRacionales[listRacionales.size()-1].getDenominador();
+        add(os1.str());
+
   crearRacional();
+  stringstream os2;
+        os2 << "Nuevo racional creado: " << listRacionales[listRacionales.size()-1].getNumerador() <<
+        "/" <<listRacionales[listRacionales.size()-1].getDenominador();
+        add(os2.str());
   Racional racional1;
   Racional racional2;
-  createFile("Log de Racionales Perrones:");
+  Racional racional3;
+  int escogido1 = 0, escogido2 = 0;
+  string log;
   do {
     int opcion = menu();
     if ((opcion != 9) && (opcion != 10)){
       cout << "Racional 1: " << endl;
-      racional1 = listRacionales[escogerValor()];
+      escogido1 = escogerValor();
+      racional1 = listRacionales[escogido1];
       cout << "Racional 2: " << endl;
-      racional2 = listRacionales[escogerValor()];
+      escogido2 = escogerValor();
+      racional2 = listRacionales[escogido2];
 
       cout << "Racional 1: " << racional1.getNumerador() << endl;
       cout << "Racional 2: " << racional2.getNumerador() << endl;
     }
     switch (opcion) {
     case 1:{
+        racional3 = racional1 + racional2;
+        listRacionales.push_back(racional3);
+
+
+        stringstream os;
+        os << racional3.getNumerador() << "/" << racional3.getDenominador()
+          << " = " << racional1.getNumerador() << "/" << racional1.getDenominador()
+          << " + " << racional2.getNumerador() << "/" << racional2.getDenominador();
+        add(os.str());
+
+
 
         break;
       }
     case 2:{
-       
+      
+      racional1 += racional2;
+      racional1.reducir();
+      listRacionales[escogido1] = racional1;
+
+
+      stringstream os;
+        os << racional1.getNumerador() << "/" << racional1.getDenominador()
+          << " += " << racional2.getNumerador() << "/" << racional2.getDenominador();
+        add(os.str());
+      
+
 
 
        break;
       }
     case 3:{
-       
+       racional3 = racional1 - racional2;
+       listRacionales.push_back(racional3);
 
+
+        stringstream os;
+        os << racional3.getNumerador() << "/" << racional3.getDenominador()
+          << " = " << racional1.getNumerador() << "/" << racional1.getDenominador()
+          << " - " << racional2.getNumerador() << "/" << racional2.getDenominador();
+        add(os.str());
 
         break;
       }
     case 4:{
-       
+       racional1 -= racional2;
+       racional1.reducir();
+       listRacionales[escogido1] = racional1;
 
+
+       stringstream os;
+        os << racional1.getNumerador() << "/" << racional1.getDenominador()
+          << " -= " << racional2.getNumerador() << "/" << racional2.getDenominador();
+        add(os.str());
 
         break;
       }
     case 5:{
-       
+       racional3 = racional1 * racional2;
+       listRacionales.push_back(racional3);
+
+
+       stringstream os;
+        os << racional3.getNumerador() << "/" << racional3.getDenominador()
+          << " = " << racional1.getNumerador() << "/" << racional1.getDenominador()
+          << " * " << racional2.getNumerador() << "/" << racional2.getDenominador();
+        add(os.str());
 
 
         break;
       }
     case 6:{
-       
+       racional1 *= racional2;
+       racional1.reducir();
+       listRacionales[escogido1] = racional1;
 
+       stringstream os;
+        os << racional1.getNumerador() << "/" << racional1.getDenominador()
+          << " *= " << racional2.getNumerador() << "/" << racional2.getDenominador();
+        add(os.str());
 
         break;
       }
     case 7:{
-       
 
+        if(racional1.getNumerador() != 0 && racional1.getDenominador() != 0
+          && racional2.getNumerador() != 0 && racional2.getDenominador() != 0){
+
+            racional3 = racional1 / racional2;
+            listRacionales.push_back(racional3);
+
+
+            stringstream os;
+            os << racional3.getNumerador() << "/" << racional3.getDenominador()
+              << " = " << racional1.getNumerador() << "/" << racional1.getDenominador()
+              << " / " << racional2.getNumerador() << "/" << racional2.getDenominador();
+            add(os.str());
+        }else{
+          cout << "No se puede divir entre cero ¡Jamás!" << endl;
+          add("Trató de dividir entre cero -> ¡Jamás!");
+        }
 
         break;
       }
     case 8:{
-       
 
+        if(racional1.getNumerador() != 0 && racional1.getDenominador() != 0
+           && racional2.getNumerador() != 0 && racional2.getDenominador() != 0){
+            racional1 /= racional2;
+            racional1.reducir();
+            listRacionales[escogido1] = racional1;
 
+            stringstream os;
+            os << racional1.getNumerador() << "/" << racional1.getDenominador()
+              << " /= " << racional2.getNumerador() << "/" << racional2.getDenominador();
+            add(os.str());
+        }else{
+          cout << "No se puede divir entre cero ¡Jamás!" << endl;
+          add("Trató de dividir entre cero -> ¡Jamás!");
+        }
+    
         break;
       }
     case 9:{
         crearRacional();
+        stringstream os;
+        os << "Nuevo racional creado: " << listRacionales[listRacionales.size()-1].getNumerador() <<
+        "/" <<listRacionales[listRacionales.size()-1].getDenominador();
+        add(os.str());
+
         break;
       }
 
@@ -128,54 +230,19 @@ int menu(){
   return opcion;
 }
 
-/*void guardarArchivo(){
-   string contenido;
-  string contenido2= "Racionales";
-  //cout << "Ingresa el nombre del archivo a crear(sin el .txt): ";
-  //cin.ignore();
-  //getline(cin, contenido2);
-  //cout << "Ingresa el contenido del archivo: ";
-  //getline(cin, contenido);
-  contenido2 += ".txt";
-  ofstream fs(contenido2.c_str());
-  //fs << contenido << endl;
-  fs.close();
-  //cout << "El archivo ha sido creado correctamente" << endl;
-  //system("pause");
-
-
-}*/
-
-
-/*void modificarArchivo(){
-   string contenido;
-  string contenido2;
-  cout << "Ingresa el nombre del archivo que quieres modificar(sin el .txt): ";
-  cin.ignore();
-  getline(cin, contenido2);
-  contenido2 += ".txt";
-  cout << "Ingresa el NUEVO contenido del archivo: ";
-  getline(cin, contenido);
-  ofstream fs(contenido2.c_str(), ios::out);
-  fs << contenido << endl;
-  fs.close();
-  cout << "El archivo ha sido modificado correctamente" << endl;
-  system("pause");
-}*/
 
 void crearRacional(){
-  int numerador, denominador;
+  int numerador, denominador = 0;
   cout << "Ingrese el numerador" << endl;
   cin >> numerador;
-  cout << "Ingrese el denominador" << endl;
-  cin >> denominador;
+  do{
+    cout << "Ingrese el denominador" << endl;
+    cin >> denominador;
+  }while(denominador == 0);
   Racional racional = Racional();
-  //Racional* racional = new Racional(numerador, denominador);
-  //cout << "Esto es una prueba " << racional->getNumerador() << endl;
-  //cout << "Cantidad de racionales" << listRacionales.size();
-  //listRacionales.push_back(racional);
+
   listRacionales.push_back(Racional(numerador, denominador));
-  //cout << "Cantidad de racionales" << listRacionales.size();
+
 }
 
 int escogerValor(){
@@ -201,3 +268,5 @@ void add(string unString ){
     fileAdd << unString << endl;
     fileAdd.close();
 }
+
+

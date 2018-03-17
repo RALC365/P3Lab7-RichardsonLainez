@@ -24,6 +24,22 @@ class Racional{
    void setDenominador(int);
    void reducir();
 
+   //Metodos sobrecargados
+   //const Racional operator + (const Racional);
+   friend Racional& operator +(const Racional &p1,const Racional &p2);
+   friend Racional& operator -(const Racional &p1,const Racional &p2);
+   friend Racional& operator *(const Racional &p1,const Racional &p2);
+   friend Racional& operator /(const Racional &p1,const Racional &p2);
+
+   //operacion y asignacion
+   friend Racional& operator +=(Racional &p1 ,const Racional &p2);
+   friend Racional& operator -=(Racional &p1,const Racional &p2);
+   friend Racional& operator *=(Racional &p1,const Racional &p2);
+   friend Racional& operator /=(Racional &p1,const Racional &p2);
+
+
 };
+
+
 
 #endif

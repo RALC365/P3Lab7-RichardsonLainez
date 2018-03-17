@@ -41,5 +41,77 @@ void Racional::reducir(){
 
 }
 
+//metodos sobrecargados
+
+/*Racional Racional :: operator + (const Racional){
+}*/
+
+// Sobrecarga del operador + para la clase Pareja
+
+
+
+
+
+Racional& operator -(const Racional &p1,const Racional &p2){
+  return *(new Racional((p1.numerador*p2.denominador) + (-1*(p2.numerador*p1.denominador)), 
+    p1.denominador*p2.denominador) );
+
+  //a/b + c/d = (a*d + c*b)/bd
+}
+
+
+Racional& operator +(const Racional &p1,const Racional &p2){
+  return *(new Racional((p1.numerador*p2.denominador) + (p2.numerador*p1.denominador), 
+    p1.denominador*p2.denominador) );
+
+  //a/b + c/d = (a*d - c*b)/bd
+}
+
+Racional& operator *(const Racional &p1,const Racional &p2){
+  return *(new Racional(p1.numerador * p2.numerador, 
+    p1.denominador*p2.denominador) );
+
+  //a/b + c/d = (a*c) / (b* d)
+}
+
+Racional& operator /(const Racional &p1,const Racional &p2){
+  return *(new Racional(p1.numerador*p2.denominador , p2.numerador*p1.denominador));
+
+  //a/b + c/d = (a*d) / (b* c)
+}
+
+Racional& operator +=(Racional &p1, const Racional &p2){
+   p1.numerador = (p1.numerador*p2.denominador) + (p2.numerador*p1.denominador); 
+   p1.denominador = p1.denominador*p2.denominador;
+
+  //a/b + c/d = (a*d - c*b)/bd
+}
+
+Racional& operator -=(Racional &p1,const Racional &p2){
+  p1.numerador = (p1.numerador*p2.denominador) + (-1*(p2.numerador*p1.denominador)); 
+   //p1.setNumerador((p1.getNumerador()*p2.getDenominador()) + (-1*(p2.getNumerador()*p1.getDenominador())))
+   p1.denominador = p1.denominador*p2.denominador;
+  //a/b + c/d = (a*d + c*b)/bd
+}
+
+Racional& operator *=(Racional &p1,const Racional &p2){
+    p1.numerador = p1.numerador * p2.numerador;
+    p1.denominador = p1.denominador*p2.denominador;
+
+  //a/b + c/d = (a*c) / (b* d)
+}
+
+Racional& operator /=(Racional &p1,const Racional &p2){
+    p1.numerador = p1.numerador * p2.denominador;
+    p1.denominador = p2.numerador * p1.denominador;
+
+  //a/b + c/d = (a*d) / (b* c)
+}
+
+
+
+
+
+
 
 
